@@ -20,26 +20,15 @@ public class Main {
     static TrayIcon trayIcon = null;
 
     public static void main(String[] args) throws Exception {
-        try {
-            tray.add(refreshTrayIcon(getData()));
-        } catch (AWTException e) {
-            e.printStackTrace();
-        }
+        tray.add(refreshTrayIcon(getData()));
     }
 
-    private static void refresh() {
+    private static void refresh() throws Exception {
         refreshTrayIcon(getData());
     }
 
-    private static List<Value> getData() {
-        String response = null;
-        try {
-            response = httpGet("http://api.doviz.com/list/C");
-            return getValues(response);
-        } catch (Exception e) {
-            System.exit(0);
-            return new ArrayList<>();
-        }
+    private static List<Value> getData() throws Exception {
+        return getValues(httpGet("http://api.doviz.com/list/C"));
     }
 
     private static TrayIcon refreshTrayIcon(List<Value> values) {
@@ -60,7 +49,11 @@ public class Main {
         refresh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                refresh();
+                try {
+                    refresh();
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
             }
         });
 
