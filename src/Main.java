@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 public class Main {
 
     static final SystemTray tray = SystemTray.getSystemTray();
+    static final PopupMenu popup = new PopupMenu();
     static TrayIcon trayIcon = null;
 
     public static void main(String[] args) throws Exception {
@@ -49,14 +50,7 @@ public class Main {
             trayIcon.setImage(createImage(values.get(0), false));
         }
 
-        trayIcon.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println(e);
-            }
-        });
-
-        final PopupMenu popup = new PopupMenu();
+        popup.removeAll();
         // dolar, euro, sterlin, kanada doları
         for (int i = 0; i < 4; i++) {
             popup.add(new MenuItem(values.get(i).getKey() + ": " + values.get(i).getAlis()));
